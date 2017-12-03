@@ -94,6 +94,19 @@ spec:
       - name: cockroachdb
         image: cockroachdb/cockroach:v1.1.3
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 2
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
         ports:
         - containerPort: 26257
           name: grpc
